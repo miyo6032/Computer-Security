@@ -1,0 +1,134 @@
+Michael Yoshimura Homework 1
+
+1. {Checkout} Scenario
+Assumptions:
+I am assuming the scope is just the kiosk and the software that comes with it.
+
+Assets:
+- Merchandise - The different products on the shelves for sale, in the storage rooms, or being delivered
+- Physical and digital currency - Bills, coins, credit cards
+- Customers - Mostly customer data and privacy.
+
+Threats:
+- Shoplifters - Anyone who tries to steal merchandise. The most common form (I can imagine) related to this system is attempting to
+get a few items for free by not scanning the barcode.
+- Fake credit card readers - Malicious readers attached to the self-checkout kiosk can damage customers and the
+reputation of the store.
+- Underaged purchase of alcohol - We don't want this happening, as the store shouldn't be breaking laws.
+- Hacking - More organized attempts at getting control of the software.
+
+Countermeasures:
+- Security Cameras - Installing security cameras will deter anyone from stealing and have a higher likelihood of catching
+thieves. The cost is monetary, and also creates an atmosphere in which a regular customer knows they are being watched,
+which is not ideal.
+
+- Dedicated Manager - Require a dedicated manager to oversee the system. This allows an additional pair of eyes
+to catch behavior that the system cannot catch easily. The cost is that the system becomes more vulnerable to social
+engineering, and the employee has to oversee the system when they could be doing something else.
+
+- Encryption/wired connections - I do not know too much about how systems could be hacked, but encrypting customer
+data and avoiding sending it through an easily interceptable network would protect customer data. It would add some
+overhead and require more development time.
+
+----
+2. {Stadium} Scenario
+Assumptions:
+The main assumption is that this is during a sports event, as that will be the busiest time.
+I won't consider the architecture of the building, as I am assuming that the stadium has been built already.
+References: https://resources.fifa.com/image/upload/-515398.pdf?cloudid=xycg4m3h1r1zudk7rnkb
+
+Assets:
+- Fans/Spectators - 
+- The teams - The teams playing on the field
+- Other employees - Cleaners, ticket people (cashiers?), vendors, etc.
+- The building - 
+- The big screen - 
+- The audio system - 
+
+Threats:
+- Terrorism - Low probability but high threat occurrences like shootings.
+- Hacking - Taking over screens or the audio system with malicious purposes.
+- Smuggling - Mostly fans smuggling in prohibited stuff like drugs that could cause a disturbance to other fans.
+- Trespassing - People going into areas they shouldn't. Examples include spectators entering areas for teams, or
+spectators that enter the stadium without a valid ticket.
+- Vandalism/Graphitti - 
+
+Countermeasures:
+- Inspection - Before setting up an event, have areas inspected for stuff like bombs. The main cost is the time
+required for inspection.
+
+- I don't know of any good countermeasures to hacking besides getting some cybersecurity professionals to help out.
+
+- Security checks and bag size restrictions - Makes it harder to smuggle in firearms and more common prohibited
+items. This is, however, a massive inconvenience to spectators, so it becomes a question of how much to spend to make
+the lines go faster. This is the main way to make smuggling more difficult.
+
+- Ticketing/turnstiles - Makes it harder to enter the venue without a ticket, but again, it causes a lot of inconvenience
+to the spectators. This is essential if we want to make enough money.
+
+- Punishments for smuggling and trespassing - A standard nontechnical countermeasure that further discourages people from
+trying to exploit the system.
+
+----
+3. {Grading} Scenario
+Assumptions:
+The submission is electronic, and the site that the grade is entered is secure enough that I won't worry about it being
+compromised.
+Sources: http://en.writecheck.com/plagiarism-checker-tools-misunderstandings
+
+Assets:
+- The integrity of the grade - The grade for each submission should be accurate.
+- The integrity of the submission - The main question is validating that the submission is the student's work.
+- Grade privacy - Only the student and instructor should be able to see the grade by default
+
+Threats:
+- Plagiarism - Using someone else's work (either a student or online) and presenting it as your own.
+
+Countermeasures:
+- Make clear the punishment for academic dishonesty - This probably does not deter determined offenders, but will discourage some students. 
+The main cost is that speaking about such topics is not fun, and may dampen the excitement for the class.
+
+- Plagiarism Checker - This method can catch offenders. It requires time to apply a checker to assignments. Paying
+for a checker with a more complete database versus a free version is also a trade-off between money and security.
+
+- Changing assignment questions every semester - This requires a lot of time, but makes the amount of effort required to
+plagiarize successfully higher, hopefully, high enough to make most students do the assignment.
+
+----
+4. Original Scenario
+Making a multiplayer game. I won't be focusing on accounts, but mostly on the client-server and client-client interactions
+Also, the main revenue strategy is simply selling copies of a game. 
+
+Assets:
+- Server - An application that coordinates the game between the clients.
+- Clients/Accounts - This includes the computers and any of the data required for accounts (emails and such)
+- Revenue - We want to protect our main revenue strategy of being able to sell copies of the game.
+
+Threats:
+- Hacked Clients - Clients that try to trick the server into giving their player an unfair advantage. This damages the game,
+making it feel unfair to fight "hackers".
+- Piracy - When the game's source code is somehow obtained, and unlicensed copies are distributed.
+- Spammers - When players flood chats, making the game more unpleasant.
+- Hacking to obtain user information - Trying to access account information stored in a database via the server
+
+Countermeasures:
+- Skeptical endpoints - Whenever information is received by the server, that information isn't taken
+as a given but double-checked by the server. This requires extra development time but reduces the ease of being
+able to use a hacked client to cheat the game.
+
+- Requiring accounts/authentication - This is a very basic measure to prevent people from simply distributing game executables
+to others instead of purchasing a copy. This adds an extra inconvenience to players who have to log in and extra development time.
+
+- Make the game harder to reverse engineer - To discourage piracy, employ various tricks to make source code hard to get. 
+The cost is extra development time, and increased complexity of the code/deployment pipeline.
+
+- Chat Filter - Costs time and money to use and integrate one, but will make it much harder to exploit the chat system.
+
+- Banning - Ban users that have either hacked or spammed in the game. This punishment will discourage many from trying
+to exploit the game. However, this could alienate users, and there is a risk of backlash if there is an unacceptably high
+false-positive rate.
+
+- Database encryption - Adds more complexity, and could slow down authentication operations. The benefit is that stolen 
+data is much harder to read than plaintext.
+
+- Preventing database injection attacks - Costs a bit of time to check input of all text entered, but patches a common vulnerability.
