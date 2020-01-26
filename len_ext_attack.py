@@ -15,10 +15,11 @@ if len(sys.argv) >= 2:
 		message_length = len(message)
 		passcode_length = 8
 		
-		bits = get_encoding_length(passcode_length) + get_encoding_length(message_length)
+		bits = 64 + get_encoding_length(message_length)
 		h = md5(state=bytes.fromhex("7976a258772fe07d857fef32a19ed611"), count=bits)
 		malicious_message = quote("&command=UnlockSafes")
-		print(h.hexdigest())
+		print("\n")
+		print("Original Hex:", h.hexdigest())
 		h.update(malicious_message)
 		new_token = h.hexdigest()
 
