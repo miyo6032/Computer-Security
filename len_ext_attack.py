@@ -25,6 +25,6 @@ if len(sys.argv) >= 2:
 
 		# Format the link to match secret||message||pad_m||x
 		previous_padding = quote(padding((message_length + secret_length) * 8))
-		subbed_link = re.sub(r'api\?token=.*$', "api?token=" + new_token + "&" + message + previous_padding + malicious_message, original_link)
+		subbed_link = re.sub(r'token=.*$', "token=" + new_token + "&" + message + previous_padding + malicious_message, original_link)
 
 		print(subbed_link)

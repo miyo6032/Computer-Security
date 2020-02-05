@@ -36,20 +36,6 @@ letter_freqs = {
 
 alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
-input = """ethicslawanduniversitypolicieswarningtodefendasystemyouneedtobeabletot
-hinklikeanattackerandthatincludesunderstandingtechniquesthatcanbeusedt
-ocompromisesecurityhoweverusingthosetechniquesintherealworldmayviolate
-thelawortheuniversitysrulesanditmaybeunethicalundersomecircumstancesev
-enprobingforweaknessesmayresultinseverepenaltiesuptoandincludingexpuls
-ioncivilfinesandjailtimeourpolicyineecsisthatyoumustrespecttheprivacya
-ndpropertyrightsofothersatalltimesorelseyouwillfailthecourseactinglawf
-ullyandethicallyisyourresponsibilitycarefullyreadthecomputerfraudandab
-useactcfaaafederalstatutethatbroadlycriminalizescomputerintrusionthisi
-soneofseverallawsthatgovernhackingunderstandwhatthelawprohibitsifindou
-btwecanreferyoutoanattorneypleasereviewitsspoliciesonresponsibleuseoft
-echnologyresourcesandcaenspolicydocumentsforguidelinesconcerningproper""".replace("\n", "").replace(" ", "").upper()
-
-
 def pop_var(s):
     """Calculate the population variance of letter frequencies in given string."""
     freqs = Counter(s)
@@ -59,13 +45,20 @@ def pop_var(s):
 if __name__ == "__main__":
     # Read ciphertext from stdin
     # Ignore line breaks and spaces, convert to all upper case
-    # cipher = sys.stdin.read().replace("\n", "").replace(" ", "").upper()
+    cipher = sys.stdin.read().replace("\n", "").replace(" ", "").upper()
 
     #################################################################
     # Your code to determine the key and decrypt the ciphertext here
 
     index_to_letter = {i: alphabet[i] for i in range(26)}
     letter_to_index = {alphabet[i]: i for i in range(26)}
+
+    # find the poplation variance of the letter frequences from wikipedia
+    def dict_var():
+        mean = np.mean(list(letter_freqs.values()))
+        return np.mean([(freq - mean) ** 2 for freq in letter_freqs.values()])
+
+    reference_pop_var = dict_var()
 
     def encrypt(key, plaintext):
         key = key.upper()
@@ -76,21 +69,35 @@ if __name__ == "__main__":
             text += letter
         return text
 
+    def decrypt(key, ciphertext):
+        text = ""
+        for i in range(len(ciphertext)):
+            adjustment = letter_to_index[key[i % len(key)]]
+            letter = index_to_letter[(letter_to_index[ciphertext[i]] - adjustment) % 26]
+            text += letter
+        return text
+
+    # Get slices of the text (for example every 2nd character)
     def text_multiples(ciphertext, start, jump):
         text = ""
         for i in range(start, len(ciphertext), jump):
             text += ciphertext[i]
         return text;
 
+    # I don't really know what to call this. Basically part 4 in the pre-assignment
+    # "Viewing a Vigenère key of length k as a collection of k independent Caesar ciphers, calculate
+    # the mean of the frequency variances of the ciphertext for each one."
     def calculate_caesar_mean(key_length, ciphertext):
         variances = []
         for j in range(key_length):
             variances.append(pop_var(text_multiples(ciphertext, j, key_length)))
         return np.mean(variances)
 
+    # Find the key length by finding the closest pop variance to the reference
+    # pop variance given by the dictionary above
     def find_key_length(ciphertext):
-        variances = [calculate_caesar_mean(i, ciphertext) for i in range(2, 14)]
-        return variances.index(max(variances)) + 2
+        variances = [abs(calculate_caesar_mean(i, ciphertext) - reference_pop_var) for i in range(2, 14)]
+        return variances.index(min(variances)) + 2
 
     # Finds the letter offset that matches the frequencies above the best
     def match_frequencies(letter_frequencies):
@@ -110,14 +117,4 @@ if __name__ == "__main__":
             key += index_to_letter[match_frequencies(letter_frequencies)]
         return key
 
-    # print(pop_var(encrypt("z", input)))          
-    # print(pop_var(encrypt("yz", input)))
-    # print(pop_var(encrypt("xyz", input)))
-    # print(pop_var(encrypt("wxyz", input)))
-    # print(pop_var(encrypt("vwxyz", input)))
-    # print(pop_var(encrypt("uvwxyz", input)))
-    # print(pop_var(letter_freqs))
-    ciphertext = encrypt("antelopes", input)
-    print(find_key(ciphertext))
-
-
+    print(find_key(cipher))
