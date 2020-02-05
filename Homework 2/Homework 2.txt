@@ -9,8 +9,32 @@ However, given a large enough p, the computing 'a' this way in a manner efficien
 g = 2
 
 # Part 2
-2.1 Attack at XXX
-explain your work
-2.2 Alice should properly encrypt using ...
-2.3 0000...00
-explain your work
+2.1 Attack at 6pm
+
+Here is the code I wrote. Basically, it iterates through all of the possible 24 times that could fit, and encrypts
+it using the public key. Then, I just compare to see if the cipher texts are the same.
+
+import os;
+import itertools;
+c = 0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004476f5079fc8197cd6035aa598facf79323eab302ea8d66ebb137b5d9e9e3b1b26806526f92b5
+
+command = """echo -n "Attack at XXX" | openssl rsautl -raw -pubin -inkey rsa-pub.pem | xxd -p -c 256"""
+
+times = [str(i) + time for i, time in itertools.product(range(1, 13), ["am", "pm"])] # Uses a cartesian product
+
+for i in times:
+	stream = os.popen(command.replace("XXX", i))
+	if int(stream.read(), 16) == c:
+		print(i) # Prints 6am
+
+2.2 The problem is that the message is very small, and there are a very small amount of possibilities so that an attacker
+can enumerate every message ciphertext and guess. To solve this, add some extra random padding. This makes it so that
+the attacker has to guess the random bits as well, which is much more difficult.
+
+2.3 0x7a188798ac31a266f279ee8960c4d80b3eb5fed0cefe7d354df143a6594ed43cc641700eff7d926984b32104f806db9c61abadfca415013ce16d3eae5f581338b5f3c7daff9eb90dc5f8543cdd0bbd12938ac95bca96dc3e8ebd8c7714a88aef3287c23d00d6039200cbf029121e7e4dbab3340849278e5b726bbcf5c60e946c0a9f91aa9fac6c3b3fbf7b6fb1b99ba35b3447aba81a352c1cfae1e605ab4abe56621fba2e338ba6e6c8c9316b0381ce16f52e41f56cc2998351f128a90bc2072db88d4fbba1d854153d77f1c611d6480d09c629df11b9d518663d461634d3e600806aeff372e6b3a45adf4fd2d17c13b6ad10f852593e1cd7c9de4f68a41487
+
+Here is the command: 
+echo -n "miyo6032" | openssl rsautl -encrypt -pubin -inkey rsa-pub.pem | xxd -p -c 256
+
+All I did was remove the -raw parameter, which makes it go to the default option which is to encrypt
+with some random padding.

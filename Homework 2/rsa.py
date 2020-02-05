@@ -9,5 +9,10 @@ command = """echo -n "Attack at XXX" | openssl rsautl -raw -pubin -inkey rsa-pub
 times = [str(i) + time for i, time in itertools.product(range(1, 13), ["am", "pm"])]
 
 for i in times:
-    stream = os.popen(command)
-    print(stream.read())
+	stream = os.popen(command.replace("XXX", i))
+	if int(stream.read(), 16) == c:
+		print(i)
+
+safe_command = """echo -n "miyo6032" | openssl rsautl -encrypt -pubin -inkey rsa-pub.pem | xxd -p -c 256"""
+stream = os.popen(safe_command)
+print(stream.read())
