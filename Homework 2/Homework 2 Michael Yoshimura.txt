@@ -1,9 +1,11 @@
+Homework 2 Michael Yoshimura
+
 # Part 1
 1.1a. 0x2000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 1.1b. 0x879649e7504d2540f68b73d4244752c1ece2822ba0de59cc9a632b6fc0cda648d64bd3295d390028f79b8bfcc1b394ae9f0c21e542973672cb0fc00ba1a695f52fc8ef400eba63f9e2d86d1588ef887056aa7e71fb2ce08e98228b9eb3005aa79538237a238a5e94c54e937787489c9fbe25c41f0ff164705f4394c163b853b6a08204b99f1955183020d515c5c7b65c80309eece37da9281fa6fb9d2bf4c1e57b22b9c08317f82977ccada06957567ff6d9b18d83d1c5fca40714db8fb77fed19647d832e1e136b0d9099596d24229e37e55f70b2aa44c3ec4c489a5aeb1f31fae6691a5e1199263ff731d42b7a47d49110d9501ce9a1b1182b52d7512dd4c
 
-1.2 We can compute a given infinite resources. We have 'g', 'p', and g^a % p, which is the discrete log problem.
-However, given a large enough p, the computing 'a' this way in a manner efficient enough to break cryptography is not possible.
+1.2 We can compute 'a' given infinite resources. We have 'g', 'p', and g^a % p, which is the discrete log problem.
+However, given a large enough p, the computing 'a' this way in a manner efficient enough to break cryptography is not possible. So given the resources I have, no, I cannot compute this.
 
 1.3 p = 0x00984aca6e0bf7ac2a5999818f058faf98d4e18d5ec2bd33bbecdb924fb5ee85148003cac5047d366899db5ff99378ee6f498d9d6d13cafcf6def8ba9761c85f9b54cdfd9a123a9fc696b768d6d7a55425ca0fa3c41492b619e322b8c8fa18a3332ba0177ee92ad9a13e5e9e5e13c1d08dca75c17c3e331bf809d4a16331b8492ba744f444027de355d17211ffd1ba5e5e9a228fc2111da93e1eb7ae54052acb25f8de3c8ee6183dc69f5ea827ac9d1f54015eece8674c26930a5fc5b0e8772adb54ac79026556a31a74fdf5bcc803362c53b51e8ff0da21bf1d29c7dd667a011360ea88cbdc355ffd2bb2b84b7d674860967a0239024c8f1bd7f634f6b325413b
 g = 2
@@ -11,8 +13,8 @@ g = 2
 # Part 2
 2.1 Attack at 6pm
 
-Here is the code I wrote. Basically, it iterates through all of the possible 24 times that could fit, and encrypts
-it using the public key. Then, I just compare to see if the cipher texts are the same.
+Here is the code I wrote. Basically, it iterates through all of the possible 24 times that could fit and encrypts
+it using the public key. Then, I just compare to see if the ciphertexts are the same.
 
 import os;
 import itertools;
@@ -27,7 +29,7 @@ for i in times:
 	if int(stream.read(), 16) == c:
 		print(i) # Prints 6am
 
-2.2 The problem is that the message is very small, and there are a very small amount of possibilities so that an attacker
+2.2 The problem is that the message is very small, and there is a very small amount of possibilities so that an attacker
 can enumerate every message ciphertext and guess. To solve this, add some extra random padding. This makes it so that
 the attacker has to guess the random bits as well, which is much more difficult.
 
@@ -37,4 +39,4 @@ Here is the command:
 echo -n "miyo6032" | openssl rsautl -encrypt -pubin -inkey rsa-pub.pem | xxd -p -c 256
 
 All I did was remove the -raw parameter, which makes it go to the default option which is to encrypt
-with some random padding.
+with PKCS#1 v1.5 padding.

