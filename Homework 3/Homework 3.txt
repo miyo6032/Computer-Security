@@ -1,0 +1,18 @@
+# Problem 1
+1a. Having one system would eliminate inconsistent and varying levels of security implemented many times by many sites.
+1b. If the central site if somehow compromised, every sub-site is vulnerable.
+1c. The user arrives on site A, and to log in, is redirected to the central login. After logging in the central login redirect back to site A with A and Sign(u). Site A can use those parameters to access a real site under the user's account.
+1d. For each subsite, have a unique key pair for each site. Basically, when the user logs in, the central site looks up the correct private key signature to send based on the sub-site, and sends that. The sub-site expects a signature from that key pair. This way, the central sign on will throw an error when a fake site attempts this attack because it does not have a private key to look up.
+1e. Send n_1 to Bob, and get HMAC_k(n_1) and n_2. Then, send n_2 to Alice and get HMAC_k(n_2). Then, send HMAC_k(n_2) to Bob and Mallory is authenticated according to Bob.
+1f. Instead of initially sending just n_1, Alice should send the n_3 and HMAC_k(n_3), and have Bob verify that those match. If they do not match, Bob doesn't send anything back, which prevents Mallory from being able to indirectly compute HMACs. This assumes that Mallory can't intercept messages from Alice.
+# Problem 2
+2a. 62 ^ 8 combinations. On average we'll find a match a certain password after (62 ^ 8) / 2 tries. That number divided by 4 million results in about 316 years.
+2b. If we can crack one password every 316 years, then that 7584 hours, and paralellizing that perfectly would require 7584 bots to crack one per hour.
+2c. The password takes up 8 bytes, and the hash takes up 8 bytes, so the table would take up 16 * (62 ^ 8) bytes or 3.49 petabytes
+2d. For each chain, we store the first password and the last hash, so 16 bytes per chain. There are ceil(N / k) chains to handle N passwords. So the storage equation will is approximately 16 * N / k
+2e. 16 * (62 ^ 8) / 5000 bytes or 698.68 gigabytes. This is reasonable, but if we didn't have the space, we could increase the chain length.
+2f. (62 ^ 8) / 2000000 seconds or about 1263 years.
+2g. The rainbow table makes the storage feasable. It is still infeasable to calculate the table given our hardware though.
+2h. The attacker's rainbow table won't work unless they know the server_secret and construct a new table with server_secret concatenated to all of the passwords. This makes rainbow tables much less convenient because it only applies to certain servers. It's still not great because a specific rainbow table can still work fine given the server secret.
+2i. Have the server_secret be random for each password, which means that a table would have to be constructed for every possible secret concatenation which is infeasable.
+2j. 7.8 seconds. This means that generating rainbow tables for certain passwords are incredibly easy. A SHA-256 hashed password that's 8 characters long and no special characters is completely insecure. It's not very easy to require strong passwords, so the best solution may be to use a more expensive hash function.
