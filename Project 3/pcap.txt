@@ -1,0 +1,45 @@
+1: IP addresses 4.2.2.1 10.0.2.3 10.0.2.15 23.9.91.27 23.32.225.206 23.203.230.15 23.203.235.144 40.74.117.114 40.85.224.10 52.32.186.162 52.40.5.187 52.84.212.49 52.84.212.117 52.84.212.241 52.88.61.37 52.201.200.120 52.216.192.16 54.69.155.132 54.88.238.74 54.192.33.213 54.208.102.139 54.239.17.7 54.239.25.208 63.251.109.60 63.251.109.73 65.52.8.54 70.37.73.37 72.21.81.200 72.21.91.29 72.21.194.87 72.21.206.53 72.21.206.93 72.167.18.239 91.189.89.198 91.189.89.199 91.189.91.157 91.189.94.4 98.138.252.30 111.13.101.208 123.125.114.144 129.19.157.7 129.19.157.16 131.253.61.98 131.253.61.100 138.91.83.37 157.240.2.35 168.63.138.145 184.72.106.52 196.25.9.46 198.41.215.68 204.79.197.200 204.79.197.222 216.58.217.33 216.58.217.34 216.58.217.38 216.58.217.46 216.239.32.27.
+Mac codes: PcsCompu_da:f7:f5 (08:00:27:da:f7:f5), RealtekU_12:35:02 (52:54:00:12:35:02)
+
+2: We both have plenty of TLS handshakes and http requests, so I can guess that this is some web server. The number of ips in about 1000 seconds is not that big, so this endpoing is probably not a large website.
+
+3: a. tpr-route-server.saix.net
+b. The telnet protocol send the username and password over in plaintext (it doesn't seem to encrypt anything).
+c. The telnet commands seem to be requests that set up a communication and setting between the server and client.
+d. SSH was the replacement.
+
+4. a. duckduckgo.com
+b. I don't think there is a way to keep the destination ip address confidential because that is what needs to be read by the network to get it to the correct place.
+c. Cipher Suites (23 suites)
+    Cipher Suite: TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 (0xc02b)
+    Cipher Suite: TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (0xc02f)
+    Cipher Suite: TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA (0xc00a)
+    Cipher Suite: TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA (0xc009)
+    Cipher Suite: TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (0xc013)
+    Cipher Suite: TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (0xc014)
+    Cipher Suite: TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA (0xc012)
+    Cipher Suite: TLS_ECDHE_ECDSA_WITH_RC4_128_SHA (0xc007)
+    Cipher Suite: TLS_ECDHE_RSA_WITH_RC4_128_SHA (0xc011)
+    Cipher Suite: TLS_DHE_RSA_WITH_AES_128_CBC_SHA (0x0033)
+    Cipher Suite: TLS_DHE_DSS_WITH_AES_128_CBC_SHA (0x0032)
+    Cipher Suite: TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA (0x0045)
+    Cipher Suite: TLS_DHE_RSA_WITH_AES_256_CBC_SHA (0x0039)
+    Cipher Suite: TLS_DHE_DSS_WITH_AES_256_CBC_SHA (0x0038)
+    Cipher Suite: TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA (0x0088)
+    Cipher Suite: TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (0x0016)
+    Cipher Suite: TLS_RSA_WITH_AES_128_CBC_SHA (0x002f)
+    Cipher Suite: TLS_RSA_WITH_CAMELLIA_128_CBC_SHA (0x0041)
+    Cipher Suite: TLS_RSA_WITH_AES_256_CBC_SHA (0x0035)
+    Cipher Suite: TLS_RSA_WITH_CAMELLIA_256_CBC_SHA (0x0084)
+    Cipher Suite: TLS_RSA_WITH_3DES_EDE_CBC_SHA (0x000a)
+    Cipher Suite: TLS_RSA_WITH_RC4_128_SHA (0x0005)
+    Cipher Suite: TLS_RSA_WITH_RC4_128_MD5 (0x0004)
+d. The last one listed uses MD5, which shouldn't be used for anything.
+e. Cipher Suite: TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (0xc02f)
+
+5. a. bing.com
+b. The search history is in the get address.
+c. can people read what i search online
+d. Use a search engine or addon that encrypts searches before sending them to the server.
+
+6. 5 years
